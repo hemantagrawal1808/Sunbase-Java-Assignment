@@ -23,7 +23,7 @@ function syncData() {
     
     // Call the remote API to fetch customer list and update the local database
     
-     fetch('https://qa.sunbasedata.com/sunbase/portal/api/assignment.jsp?cmd=get_customer_list', {
+     fetch('http://localhost:8089/api/customers/', {
         method: 'GET',
         headers: {
            'Authorization': 'Bearer your_jwt_token_here'
@@ -64,7 +64,7 @@ function addCustomer() {
 
     // Send a request to the backend to add the new customer
     
-     fetch('/api/customers', {
+     fetch('http://localhost:8089/api/customers/', {
          method: 'POST',
          headers: {
              'Content-Type': 'application/json'
