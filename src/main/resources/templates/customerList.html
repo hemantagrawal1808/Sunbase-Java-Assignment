@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        input[type=text] {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 30%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Customer List</h2>
+
+<input type="text" id="searchInput" placeholder="Search by name, email, or phone" oninput="searchCustomer()">
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <!-- Add more columns as needed -->
+    </tr>
+    </thead>
+    <tbody id="customerTableBody">
+        <!-- Customer data will be dynamically populated here -->
+    </tbody>
+</table>
+
+<button onclick="syncData()">Sync</button>
+
+<script>
+    function searchCustomer() {
+        // Implement search logic here
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("customerTableBody");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1]; // Change index based on the column you want to search
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function syncData() {
+        // Implement sync logic here
+        // Call the remote API to fetch customer list and update the local database
+        
+        fetch('https://qa.sunbasedata.com/sunbase/portal/api/assignment.jsp?cmd=get_customer_list', {
+            method: 'GET',
+            headers: {
+                 'Authorization': 'Bearer your_jwt_token_here'
+             }
+         })
+         .then(response => response.json())
+         .then(data => {
+             
+         })
+         .catch(error => console.error('Error:', error));
+    }
+</script>
+
+</body>
+</html>
